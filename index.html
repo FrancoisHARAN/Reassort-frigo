@@ -645,7 +645,7 @@
     }
 
     function getTotalCount() {
-      return items.reduce((total, item) => total + (state.counts[item.id] || 0), 0);
+      return items.reduce((total, item) => total + Number(state.counts[item.id] || 0), 0);
     }
 
     function updateReassortBanner() {
