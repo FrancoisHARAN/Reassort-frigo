@@ -353,6 +353,10 @@
       <section class="section">
         <h2>Frigo Bar</h2>
         <div class="list" id="bar-list"></div>
+        <div class="notes-section">
+          <h3>Notes</h3>
+          <textarea class="notes-field" placeholder="Ajoutez des notes supplémentaires..."></textarea>
+        </div>
       </section>
 
       <button class="edit-button" id="edit-list">Éditer la liste</button>
@@ -369,7 +373,7 @@
       <div class="list" id="missing-list"></div>
       <div class="notes-section">
         <h3>Notes</h3>
-        <textarea id="notes-field" placeholder="Ajoutez des notes supplémentaires..."></textarea>
+        <textarea class="notes-field" placeholder="Ajoutez des notes supplémentaires..."></textarea>
       </div>
     </section>
   </div>
@@ -434,9 +438,14 @@
     const frigoList = document.getElementById("frigo-list");
     const barList = document.getElementById("bar-list");
     const missingList = document.getElementById("missing-list");
-    const notesField = document.getElementById("notes-field");
+    const notesFields = Array.from(document.querySelectorAll(".notes-field"));
     const inventoryView = document.getElementById("inventory-view");
     const missingView = document.getElementById("missing-view");
+    function syncNotesFields() {
+      notesFields.forEach((field) => {
+        field.value = state.notes || "";
+      });
+    }
 
     function slugify(name) {
       return name
@@ -576,9 +585,7 @@
         card.append(info, button);
         missingList.appendChild(card);
       });
-      if (notesField) {
-        notesField.value = state.notes || "";
-      }
+      syncNotesFields();
     }
 
     function clampValue(value) {
@@ -656,12 +663,17 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    if (notesField) {
-      notesField.addEventListener("input", (event) => {
+    notesFields.forEach((field) => {
+      field.addEventListener("input", (event) => {
         state.notes = event.target.value;
+        notesFields.forEach((otherField) => {
+          if (otherField !== event.target) {
+            otherField.value = state.notes;
+          }
+        });
         saveState();
       });
-    }
+    });
 
     function resetListWithConfirm() {
       const confirmed = window.confirm("Êtes-vous sûr de réinitialiser la liste ?");
@@ -682,6 +694,7 @@
     document.getElementById("top-reset-button").addEventListener("click", resetListWithConfirm);
 
     renderLists();
+    syncNotesFields();
   </script>
 </body>
 </html>
