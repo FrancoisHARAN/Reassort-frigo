@@ -256,6 +256,12 @@
       font-size: 0.9rem;
     }
 
+    .missing-amount {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
     .check-button {
       border: none;
       background: #22c55e;
@@ -293,6 +299,36 @@
       color: #111827;
     }
 
+    .notes-section {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .notes-section h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .notes-section textarea {
+      min-height: 120px;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      resize: vertical;
+      background: #ffffff;
+      color: var(--text-dark);
+    }
+
     @media (min-width: 720px) {
       .app {
         max-width: 680px;
@@ -306,8 +342,6 @@
     <main id="inventory-view">
       <section class="section">
         <header>
-          <h1>Inventaire des manquants</h1>
-          <p>Tapotez pour ajouter les quantités manquantes.</p>
           <div class="top-actions">
             <button class="top-reset-button" id="top-reset-button">Réinitialiser la liste</button>
           </div>
@@ -333,6 +367,10 @@
         <button class="reset-button" id="reset-button">Réinitialiser</button>
       </div>
       <div class="list" id="missing-list"></div>
+      <div class="notes-section">
+        <h3>Notes</h3>
+        <textarea id="notes-field" placeholder="Ajoutez des notes supplémentaires..."></textarea>
+      </div>
     </section>
   </div>
 
@@ -387,7 +425,8 @@
 
     const defaultState = {
       counts: Object.fromEntries(items.map((item) => [item.id, 0])),
-      done: Object.fromEntries(items.map((item) => [item.id, false]))
+      done: Object.fromEntries(items.map((item) => [item.id, false])),
+      notes: ""
     };
 
     const state = loadState();
@@ -395,6 +434,7 @@
     const frigoList = document.getElementById("frigo-list");
     const barList = document.getElementById("bar-list");
     const missingList = document.getElementById("missing-list");
+    const notesField = document.getElementById("notes-field");
     const inventoryView = document.getElementById("inventory-view");
     const missingView = document.getElementById("missing-view");
 
@@ -416,7 +456,8 @@
         const parsed = JSON.parse(saved);
         return {
           counts: { ...defaultState.counts, ...(parsed.counts || {}) },
-          done: { ...defaultState.done, ...(parsed.done || {}) }
+          done: { ...defaultState.done, ...(parsed.done || {}) },
+          notes: typeof parsed.notes === "string" ? parsed.notes : ""
         };
       } catch (error) {
         return structuredClone(defaultState);
@@ -505,7 +546,6 @@
         empty.style.color = "#6b7280";
         empty.style.textAlign = "center";
         missingList.appendChild(empty);
-        return;
       }
       missingItems.forEach((item) => {
         const card = document.createElement("div");
@@ -519,6 +559,7 @@
         title.textContent = item.name;
         const amount = document.createElement("span");
         amount.textContent = `Quantité : ${state.counts[item.id]}`;
+        amount.className = "missing-amount";
         info.append(title, amount);
 
         const button = document.createElement("button");
@@ -535,6 +576,9 @@
         card.append(info, button);
         missingList.appendChild(card);
       });
+      if (notesField) {
+        notesField.value = state.notes || "";
+      }
     }
 
     function clampValue(value) {
@@ -612,6 +656,13 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+    if (notesField) {
+      notesField.addEventListener("input", (event) => {
+        state.notes = event.target.value;
+        saveState();
+      });
+    }
+
     function resetListWithConfirm() {
       const confirmed = window.confirm("Êtes-vous sûr de réinitialiser la liste ?");
       if (!confirmed) {
@@ -621,6 +672,7 @@
         state.counts[item.id] = 0;
         state.done[item.id] = false;
       });
+      state.notes = "";
       saveState();
       renderLists();
       renderMissing();
