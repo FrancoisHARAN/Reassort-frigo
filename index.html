@@ -41,6 +41,10 @@
       padding: 24px 20px 16px;
     }
 
+    .inventory-header {
+      padding: 0;
+    }
+
     header h1 {
       margin: 0;
       font-size: 1.5rem;
@@ -230,6 +234,30 @@
       display: flex;
     }
 
+    .reassort-banner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px 8px;
+      text-align: center;
+    }
+
+    .reassort-banner img {
+      width: min(260px, 90%);
+      border-radius: 16px;
+      box-shadow: 0 12px 20px rgba(15, 23, 42, 0.18);
+    }
+
+    .reassort-banner p {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111827;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
     .missing-card {
       display: grid;
       grid-template-columns: 72px 1fr auto;
@@ -358,7 +386,7 @@
   <div class="app">
     <main id="inventory-view">
       <section class="section">
-        <header>
+        <header class="inventory-header">
           <div class="top-actions">
             <button class="top-reset-button" id="top-reset-button">Réinitialiser la liste</button>
           </div>
@@ -383,6 +411,10 @@
       <header>
         <h1>Liste des manquants</h1>
       </header>
+      <div class="reassort-banner" id="reassort-banner" hidden>
+        <img src="image/giphy.gif" alt="Gros réassort, gros muscle" />
+        <p>Gros réassort, gros muscle, gros champion</p>
+      </div>
       <div class="secondary-actions">
         <button class="back-button" id="back-button">Retour</button>
         <button class="reset-button" id="reset-button">Réinitialiser</button>
@@ -406,8 +438,8 @@
       { id: "label-5", name: "Label 5", category: "Frigo", color: "#0f172a", image: "label-5.png" },
       { id: "desperados-50cl", name: "Desperados 50 cl", category: "Frigo", color: "#f59e0b", text: "#1f2937", image: "desperados-50cl.png" },
       { id: "leffe-50cl", name: "Leffe 50 cl", category: "Frigo", color: "#7c2d12", image: "leffe-50cl.png" },
-      { id: "86-50cl", name: "8.6 50 cl", category: "Frigo", color: "#f97316", text: "#1f2937", image: "86-50cl.png" },
-      { id: "oasis-tropical-canette", name: "Oasis Tropical (canette)", category: "Frigo", color: "#ec4899", image: "oasis-tropical-canette.png" },
+      { id: "86-50cl", name: "8.6 50 cl", category: "Frigo", color: "#1e3a8a", image: "86-50cl.png" },
+      { id: "oasis-tropical-canette", name: "Oasis Tropical (canette)", category: "Frigo", color: "#f97316", text: "#1f2937", image: "oasis-tropical-canette.png" },
       { id: "oasis-rouge-canette", name: "Oasis Rouge (canette)", category: "Frigo", color: "#f43f5e", image: "oasis-pomme-cassis-framboise-canette.png" },
       { id: "orangina-canette", name: "Orangina (canette)", category: "Frigo", color: "#f97316", text: "#1f2937", image: "orangina-canette.png" },
       { id: "ice-tea-canette", name: "Ice Tea (canette)", category: "Frigo", color: "#a16207", image: "lipton-ice-tea-peche-canette.png" },
@@ -419,7 +451,7 @@
       { id: "oasis-rouge-bouteille", name: "Oasis Rouge (bouteille)", category: "Frigo", color: "#f43f5e", image: "oasis-cassis-framboise-bouteille.png" },
       { id: "coca-cola-bouteille", name: "Coca-Cola (bouteille)", category: "Frigo", color: "#991b1b", image: "coca-cola-bouteille.png" },
       { id: "eau-petite", name: "Eau (petite)", category: "Frigo", color: "#e0f2fe", text: "#0c4a6e", image: "eau-cristaline-50cl.png" },
-      { id: "monster", name: "Monster", category: "Frigo", color: "#111827", image: "monster-energy.png" },
+      { id: "monster", name: "Monster", category: "Frigo", color: "#84cc16", text: "#1f2937", image: "monster-energy.png" },
       { id: "schweppes-canette", name: "Schweppes (canette)", category: "Frigo", color: "#fde68a", text: "#1f2937", image: "schweppes-indian-tonic-canette.png" },
       { id: "coca-zero-canette", name: "Coca-Cola Zéro (canette)", category: "Frigo", color: "#0f172a", image: "coca-zero-canette.png" },
       { id: "coca-grand-format", name: "Coca-Cola (grand format)", category: "Frigo", color: "#dc2626", image: "coca-cola-bouteille.png" },
@@ -434,7 +466,7 @@
       { id: "bar-jus-ananas", name: "Bar – Jus d’ananas", category: "Bar", color: "#fde047", text: "#1f2937", image: "bar-jus-ananas-granini.png" },
       { id: "bar-jus-abricot", name: "Bar – Jus d’abricot", category: "Bar", color: "#fb923c", text: "#1f2937", image: "bar-jus-ananas-granini.png" },
       { id: "bar-jus-orange", name: "Bar – Jus d’orange", category: "Bar", color: "#f97316", text: "#1f2937", image: "bar-jus-ananas-granini.png" },
-      { id: "bar-monster", name: "Bar – Monster", category: "Bar", color: "#111827", image: "monster-energy.png" },
+      { id: "bar-monster", name: "Bar – Monster", category: "Bar", color: "#84cc16", text: "#1f2937", image: "monster-energy.png" },
       { id: "bar-leffe-0", name: "Bar – Leffe 0%", category: "Bar", color: "#78350f", image: "leffe-blonde-bouteille.png" },
       { id: "bar-chouffe-0", name: "Bar – Chouffe 0%", category: "Bar", color: "#fbbf24", text: "#1f2937", image: "chouffe-0-bouteille.png" },
       { id: "bar-lifemans", name: "Bar – Lifemans", category: "Bar", color: "#e11d48", image: "leffe-blonde-bouteille.png" },
@@ -455,6 +487,7 @@
     const frigoList = document.getElementById("frigo-list");
     const barList = document.getElementById("bar-list");
     const missingList = document.getElementById("missing-list");
+    const reassortBanner = document.getElementById("reassort-banner");
     const notesFields = Array.from(document.querySelectorAll(".notes-field"));
     const inventoryView = document.getElementById("inventory-view");
     const missingView = document.getElementById("missing-view");
@@ -607,7 +640,18 @@
         card.append(image, details, button);
         missingList.appendChild(card);
       });
+      updateReassortBanner();
       syncNotesFields();
+    }
+
+    function getTotalCount() {
+      return items.reduce((total, item) => total + (state.counts[item.id] || 0), 0);
+    }
+
+    function updateReassortBanner() {
+      if (!reassortBanner) return;
+      const shouldShow = missingView.classList.contains("active") && getTotalCount() > 30;
+      reassortBanner.hidden = !shouldShow;
     }
 
     function clampValue(value) {
@@ -675,12 +719,14 @@
       renderMissing();
       inventoryView.style.display = "none";
       missingView.classList.add("active");
+      updateReassortBanner();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     document.getElementById("back-button").addEventListener("click", () => {
       missingView.classList.remove("active");
       inventoryView.style.display = "block";
+      updateReassortBanner();
       renderLists();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
