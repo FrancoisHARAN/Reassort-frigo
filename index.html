@@ -231,34 +231,51 @@
     }
 
     .missing-card {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 72px 1fr auto;
+      gap: 14px;
       align-items: center;
       padding: 14px 16px;
       border-radius: 16px;
       background: white;
       box-shadow: 0 12px 20px rgba(15, 23, 42, 0.08);
       border: 1px solid #e5e7eb;
+      min-height: 86px;
     }
 
     .missing-card.done {
-      opacity: 0.55;
+      opacity: 0.35;
     }
 
-    .missing-info h3 {
+    .missing-card img {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      object-fit: cover;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+    }
+
+    .missing-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .missing-details h3 {
       margin: 0;
       font-size: 1rem;
       color: var(--text-dark);
     }
 
-    .missing-info span {
+    .missing-details span {
       color: var(--muted);
       font-size: 0.9rem;
     }
 
     .missing-amount {
-      font-size: 1.15rem;
-      font-weight: 600;
+      font-size: 1.35rem;
+      font-weight: 700;
       color: var(--text-dark);
     }
 
@@ -562,14 +579,19 @@
         if (state.done[item.id]) {
           card.classList.add("done");
         }
-        const info = document.createElement("div");
-        info.className = "missing-info";
+        const image = document.createElement("img");
+        const filename = item.image || `${slugify(item.name)}.png`;
+        image.src = `image/${filename}`;
+        image.alt = item.name;
+
+        const details = document.createElement("div");
+        details.className = "missing-details";
+        const amount = document.createElement("span");
+        amount.textContent = `X${state.counts[item.id]}`;
+        amount.className = "missing-amount";
         const title = document.createElement("h3");
         title.textContent = item.name;
-        const amount = document.createElement("span");
-        amount.textContent = `Quantité : ${state.counts[item.id]}`;
-        amount.className = "missing-amount";
-        info.append(title, amount);
+        details.append(amount, title);
 
         const button = document.createElement("button");
         button.className = "check-button";
@@ -582,7 +604,7 @@
           renderMissing();
         });
 
-        card.append(info, button);
+        card.append(image, details, button);
         missingList.appendChild(card);
       });
       syncNotesFields();
