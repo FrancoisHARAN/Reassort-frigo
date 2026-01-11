@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <rect width="256" height="256" fill="#ffffff"/>
-  <rect x="84" y="32" width="88" height="16" rx="8" fill="#94a3b8"/>
-  <rect x="76" y="44" width="104" height="176" rx="22" fill="#f8e7c4" stroke="#111827" stroke-width="4"/>
-  <rect x="84" y="210" width="88" height="16" rx="8" fill="#94a3b8"/>
-  <text x="128" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#111827">Leffe</text>
-  <text x="128" y="160" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#111827">Blonde</text>
-</svg>
