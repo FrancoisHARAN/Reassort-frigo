@@ -243,6 +243,10 @@
       text-align: center;
     }
 
+    .reassort-banner[hidden] {
+      display: none;
+    }
+
     .reassort-banner img {
       width: min(260px, 90%);
       border-radius: 16px;
@@ -645,7 +649,7 @@
     }
 
     function getTotalCount() {
-      return items.reduce((total, item) => total + (state.counts[item.id] || 0), 0);
+      return items.reduce((total, item) => total + Number(state.counts[item.id] || 0), 0);
     }
 
     function updateReassortBanner() {
