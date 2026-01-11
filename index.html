@@ -283,11 +283,6 @@
 </head>
 <body>
   <div class="app">
-    <header>
-      <h1>Inventaire des boissons manquantes</h1>
-      <p>Notez rapidement ce qu'il faut rajouter dans chaque frigo.</p>
-    </header>
-
     <main id="inventory-view">
       <section class="section">
         <h2>Frigo à emporter</h2>
@@ -305,7 +300,6 @@
     <section class="list-view" id="missing-view">
       <header>
         <h1>Liste des manquants</h1>
-        <p>Uniquement les boissons avec quantité &gt; 0.</p>
       </header>
       <div class="secondary-actions">
         <button class="back-button" id="back-button">Retour</button>
@@ -319,7 +313,7 @@
     const STORAGE_KEY = "reassort-frigo-state-v1";
 
     const items = [
-      { id: "heineken-50cl", name: "Heineken 50 cl", category: "Frigo", color: "#1f7a34" },
+      { id: "heineken-50cl", name: "Heineken 50 cl", category: "Frigo", color: "#1f7a34", imageExtension: "svg" },
       { id: "poliakov", name: "Poliakov", category: "Frigo", color: "#2d2a3a" },
       { id: "rhum-ambre", name: "Rhum ambré", category: "Frigo", color: "#b45309" },
       { id: "rhum-blanc", name: "Rhum blanc", category: "Frigo", color: "#f3f4f6", text: "#111827" },
@@ -328,7 +322,8 @@
       { id: "leffe-50cl", name: "Leffe 50 cl", category: "Frigo", color: "#7c2d12" },
       { id: "86-50cl", name: "8.6 50 cl", category: "Frigo", color: "#f97316", text: "#1f2937" },
       { id: "oasis-orange-canette", name: "Oasis Orange (canette)", category: "Frigo", color: "#fb923c", text: "#1f2937" },
-      { id: "oasis-tropical-canette", name: "Oasis Tropical / Fruits rouges (canette)", category: "Frigo", color: "#ec4899" },
+      { id: "oasis-tropical-canette", name: "Oasis Tropical (canette)", category: "Frigo", color: "#ec4899" },
+      { id: "oasis-rouge-canette", name: "Oasis Rouge (canette)", category: "Frigo", color: "#f43f5e" },
       { id: "orangina-canette", name: "Orangina (canette)", category: "Frigo", color: "#f97316", text: "#1f2937" },
       { id: "ice-tea-canette", name: "Ice Tea (canette)", category: "Frigo", color: "#a16207" },
       { id: "fanta-canette", name: "Fanta (canette)", category: "Frigo", color: "#f59e0b", text: "#1f2937" },
@@ -336,7 +331,8 @@
       { id: "coca-cola-canette", name: "Coca-Cola (canette)", category: "Frigo", color: "#b91c1c" },
       { id: "ice-tea-bouteille", name: "Ice Tea (bouteille)", category: "Frigo", color: "#b45309" },
       { id: "oasis-orange-bouteille", name: "Oasis Orange (bouteille)", category: "Frigo", color: "#fb923c", text: "#1f2937" },
-      { id: "oasis-tropical-bouteille", name: "Oasis Tropical / Fruits rouges (bouteille)", category: "Frigo", color: "#ec4899" },
+      { id: "oasis-tropical-bouteille", name: "Oasis Tropical (bouteille)", category: "Frigo", color: "#ec4899" },
+      { id: "oasis-rouge-bouteille", name: "Oasis Rouge (bouteille)", category: "Frigo", color: "#f43f5e" },
       { id: "coca-cola-bouteille", name: "Coca-Cola (bouteille)", category: "Frigo", color: "#991b1b" },
       { id: "eau-petite", name: "Eau (petite)", category: "Frigo", color: "#e0f2fe", text: "#0c4a6e" },
       { id: "monster", name: "Monster", category: "Frigo", color: "#111827" },
@@ -418,16 +414,15 @@
         card.style.color = item.text;
       }
       const image = document.createElement("img");
-      image.src = `images/${slugify(item.name)}.png`;
+      const extension = item.imageExtension || "png";
+      image.src = `images/${slugify(item.name)}.${extension}`;
       image.alt = item.name;
 
       const details = document.createElement("div");
       details.className = "item-details";
       const title = document.createElement("h3");
       title.textContent = item.name;
-      const subtitle = document.createElement("span");
-      subtitle.textContent = "Quantité à rajouter";
-      details.append(title, subtitle);
+      details.append(title);
 
       const counter = document.createElement("div");
       counter.className = "counter";
