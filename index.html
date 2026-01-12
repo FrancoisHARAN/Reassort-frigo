@@ -113,8 +113,7 @@
       gap: 12px;
       padding: 14px 16px;
       border-radius: var(--card-radius);
-      border: 1.5px solid transparent;
-      background: #f3f4f6;
+
       box-shadow: var(--shadow);
       color: var(--text-dark);
       position: relative;
@@ -123,18 +122,6 @@
 
     .item-card.light-text {
       color: var(--text-dark);
-    }
-
-    .item-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.12));
-      pointer-events: none;
-    }
-
-    .item-card.light-text::after {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15));
     }
 
     .item-card > * {
@@ -148,7 +135,7 @@
       border-radius: 14px;
       object-fit: cover;
       background: #ffffff;
-      border: 2px solid rgba(255, 255, 255, 0.25);
+      border: 3px solid #e5e7eb;
     }
 
     .item-details h3 {
@@ -476,10 +463,10 @@
       { id: "coca-zero-canette", name: "Coca-Cola Zéro (canette)", category: "Frigo", color: "#0f172a", image: "coca-zero-canette.png" },
       { id: "coca-grand-format", name: "Coca-Cola (grand format)", category: "Frigo", color: "#dc2626", image: "coca-cola-bouteille.png" },
       { id: "eau-grande", name: "Eau (grande)", category: "Frigo", color: "#bae6fd", text: "#0c4a6e", image: "cristaline-bouteilles-50cl-1.png" },
-      { id: "bar-coca-consigne", name: "Bar – Coca-Cola (consigné)", category: "Bar", color: "#7f1d1d", image: "bar-coca-cola-verre-consigne.png" },
-      { id: "bar-orangina-consigne", name: "Bar – Orangina (consigné)", category: "Bar", color: "#f97316", text: "#1f2937", image: "bar-orangina-verre.png" },
-      { id: "bar-schweppes-consigne", name: "Bar – Schweppes (consigné)", category: "Bar", color: "#fde68a", text: "#1f2937", image: "bar-schweppes-indian-tonic-verre.png" },
-      { id: "bar-perrier-consigne", name: "Bar – Perrier (consigné)", category: "Bar", color: "#15803d", image: "bar-perrier-verre.png" },
+      { id: "bar-coca-consigne", name: "Coca-Cola consigné (bar)", category: "Bar", color: "#7f1d1d", image: "bar-coca-cola-verre-consigne.png" },
+      { id: "bar-orangina-consigne", name: "Orangina consigné (bar)", category: "Bar", color: "#f97316", text: "#1f2937", image: "bar-orangina-verre.png" },
+      { id: "bar-schweppes-consigne", name: "Schweppes consigné (bar)", category: "Bar", color: "#fde68a", text: "#1f2937", image: "bar-schweppes-indian-tonic-verre.png" },
+      { id: "bar-perrier-consigne", name: "Perrier consigné (bar)", category: "Bar", color: "#15803d", image: "bar-perrier-verre.png" },
       { id: "bar-coca-canette", name: "Bar – Coca-Cola (canette)", category: "Bar", color: "#b91c1c", image: "coca-cola-canette.png" },
       { id: "bar-coca-zero-canette", name: "Bar – Coca-Cola Zéro (canette)", category: "Bar", color: "#0f172a", image: "coca-zero-canette.png" },
       { id: "bar-schweppes-canette", name: "Bar – Schweppes (canette)", category: "Bar", color: "#fef08a", text: "#1f2937", image: "schweppes-indian-tonic-canette.png" },
@@ -557,11 +544,12 @@
     function buildCard(item) {
       const card = document.createElement("article");
       card.className = "item-card";
-      card.style.borderColor = item.color;
+
       const image = document.createElement("img");
       const filename = item.image || `${slugify(item.name)}.png`;
       image.src = `image/${filename}`;
       image.alt = item.name;
+      image.style.borderColor = item.color;
 
       const details = document.createElement("div");
       details.className = "item-details";
