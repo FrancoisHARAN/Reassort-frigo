@@ -233,6 +233,19 @@
       display: flex;
     }
 
+    .home-banner {
+      display: flex;
+      justify-content: center;
+      padding: 24px 20px 8px;
+    }
+
+    .home-banner img {
+      width: min(420px, 100%);
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+    }
+
     .reassort-banner {
       display: flex;
       flex-direction: column;
@@ -389,6 +402,9 @@
 <body>
   <div class="app">
     <main id="inventory-view">
+      <div class="home-banner">
+        <img src="image/reassort-du-diplo-horizontal-web-ratio.png" alt="Reassort du Diplo" />
+      </div>
       <section class="section">
         <header class="inventory-header">
           <div class="top-actions">
