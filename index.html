@@ -113,8 +113,7 @@
       gap: 12px;
       padding: 14px 16px;
       border-radius: var(--card-radius);
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
+
       box-shadow: var(--shadow);
       color: var(--text-dark);
       position: relative;
@@ -545,6 +544,7 @@
     function buildCard(item) {
       const card = document.createElement("article");
       card.className = "item-card";
+
       const image = document.createElement("img");
       const filename = item.image || `${slugify(item.name)}.png`;
       image.src = `image/${filename}`;
