@@ -113,8 +113,10 @@
       gap: 12px;
       padding: 14px 16px;
       border-radius: var(--card-radius);
+      border: 1.5px solid transparent;
+      background: #f3f4f6;
       box-shadow: var(--shadow);
-      color: var(--text-light);
+      color: var(--text-dark);
       position: relative;
       overflow: hidden;
     }
@@ -168,23 +170,19 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(0, 0, 0, 0.25);
+      background: #e5e7eb;
       border-radius: 999px;
-      padding: 6px 8px;
-    }
-
-    .item-card.light-text .counter {
-      background: rgba(255, 255, 255, 0.6);
+      padding: 6px 10px;
     }
 
     .counter button {
       border: none;
       background: rgba(255, 255, 255, 0.2);
       color: inherit;
-      width: 28px;
-      height: 28px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      font-size: 1rem;
+      font-size: 1.5rem;
       font-weight: 600;
     }
 
@@ -286,6 +284,7 @@
       box-shadow: 0 12px 20px rgba(15, 23, 42, 0.08);
       border: 1px solid #e5e7eb;
       min-height: 86px;
+      cursor: pointer;
     }
 
     .missing-card.done {
@@ -558,13 +557,7 @@
     function buildCard(item) {
       const card = document.createElement("article");
       card.className = "item-card";
-      if (item.text) {
-        card.classList.add("light-text");
-      }
-      card.style.background = item.color;
-      if (item.text) {
-        card.style.color = item.text;
-      }
+      card.style.borderColor = item.color;
       const image = document.createElement("img");
       const filename = item.image || `${slugify(item.name)}.png`;
       image.src = `image/${filename}`;
@@ -659,13 +652,19 @@
         button.type = "button";
         button.textContent = "✓";
         button.setAttribute("aria-label", `Marquer ${item.name} comme fait`);
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
           state.done[item.id] = !state.done[item.id];
           saveState();
           renderMissing();
         });
 
         card.append(image, details, button);
+        card.addEventListener("click", () => {
+          state.done[item.id] = !state.done[item.id];
+          saveState();
+          renderMissing();
+        });
         missingList.appendChild(card);
       });
       updateReassortBanner();
